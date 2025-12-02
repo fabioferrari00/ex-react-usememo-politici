@@ -1,5 +1,16 @@
-import { useEffect, useState, useMemo } from "react"
+import React, { useEffect, useState, useMemo } from "react"
 
+const UserCard = React.memo(({ name, image, position, biography }) => {
+  console.log("prova" + name)
+  return (
+    <div className="col-4">
+      <img src={image} alt="" />
+      <h3>{name}</h3>
+      <span><strong>{position}</strong></span>
+      <p>{biography}</p>
+    </div>
+  );
+})
 function App() {
 
   const [users, setUsers] = useState([]);
@@ -27,16 +38,16 @@ function App() {
     <>
       <h1>Lista di politici</h1>
       <div className="container">
-        <div className="row d-flex ">
-          <input type="text" name="" id="" value={search} onChange={e => setSearch(e.target.value)} placeholder="Cerca politico..." />
-          {filteredUsers.map((u, i) => {
+        <div className="row gy-3 d-flex">
+          <input
+            type="text"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="Cerca politico..."
+          />
+          {filteredUsers.map(u => {
             return (
-              <div key={i} className="col-4">
-                <h3>{u.name}</h3>
-                <img src={u.image} alt="" />
-                <span><strong>{u.position}</strong></span>
-                <p>{u.biography}</p>
-              </div>
+              <UserCard key={u.id} {...u} />
             )
           })}
         </div>
